@@ -8,7 +8,6 @@ public class DialogMetadata extends DialogMetadataD {
     public String id;
     public Date creationDate;
 
-
     public DialogMetadata(DialogMetadataD metadataD, String id) {
         this.creationDate = new Date(metadataD.createDate);
         this.createDate = metadataD.createDate;
