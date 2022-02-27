@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1062519967079",
+    "project_id": "chat-example-73aca",
+    "storage_bucket": "chat-example-73aca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062519967079:android:bc9364a43dd30c01c6f3c2",
+        "android_client_info": {
+          "package_name": "com.samsung.chatexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062519967079-brmh9h0i69f1ufn61ueh7tubfiff86l1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiZj32FG_TdA-mZOvL4_1Z-fojwHmjSgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062519967079-brmh9h0i69f1ufn61ueh7tubfiff86l1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
