@@ -83,16 +83,11 @@ public class AuthActivity extends AppCompatActivity {
                         new MyValueEventListener<String>() {
                             @Override
                             public void onValue(String value) {
+                                showMessage("User created!");
                                 startChatActivity(value);
                             }
                         }
-                ).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        showMessage("User created!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+                ).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         showMessage("Can't create user");
