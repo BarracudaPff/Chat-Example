@@ -3,6 +3,7 @@ package com.samsung.chatexample.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.samsung.chatexample.R;
+import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.services.AuthService;
 
 public class AuthActivity extends AppCompatActivity {
@@ -75,10 +77,16 @@ public class AuthActivity extends AppCompatActivity {
 
         bar.setVisibility(View.VISIBLE);
         AuthService.createAccount(
-                editTextEmail.getText().toString(),
-                editTextName.getText().toString(),
-                editTextPassword.getText().toString()
-        ).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        editTextEmail.getText().toString(),
+                        editTextName.getText().toString(),
+                        editTextPassword.getText().toString(),
+                        new MyValueEventListener<String>() {
+                            @Override
+                            public void onValue(String value) {
+                                startChatActivity(value);
+                            }
+                        }
+                ).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         showMessage("User created!");
@@ -110,6 +118,12 @@ public class AuthActivity extends AppCompatActivity {
         }
 
         //TODO
+    }
+
+    void startChatActivity(String userKey) {
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("USER_KEY", userKey);
+        startActivity(intent);
     }
 
     void showMessage(String msg) {
