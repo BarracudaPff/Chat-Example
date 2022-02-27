@@ -8,10 +8,11 @@ public class Message extends MessageD {
     public String id;
     public User from;
     public User to;
-    public Date createDate;
+    public Date creationDate;
 
     public Message(MessageD messageD, User from, User to, String id) {
-        this.createDate = new Date(messageD.createDate);
+        this.creationDate = new Date(messageD.createDate);
+        this.createDate = messageD.createDate;
         this.from = from;
         this.to = to;
         this.id = id;
