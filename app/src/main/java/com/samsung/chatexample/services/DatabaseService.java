@@ -12,14 +12,12 @@ import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.models.application.User;
 import com.samsung.chatexample.models.domain.UserD;
 
-public class DatabaseService {
-//    public static void addData() {
-//        FirebaseDatabase.getInstance()
-//                .getReference("test1")
-//                .push()
-//                .setValue("123");
-//    }
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
+public class DatabaseService {
     public static DatabaseReference usersRef() {
         return FirebaseDatabase.getInstance()
                 .getReference("users");
@@ -29,7 +27,6 @@ public class DatabaseService {
         DatabaseReference ref = usersRef().push();
         ref.setValue(user);
         return ref.getKey();
-//        return usersRef().push().setValue(user);
     }
 
     public static void getUser(String id, MyValueEventListener<User> listener) {
@@ -51,14 +48,24 @@ public class DatabaseService {
                 listener.onDatabaseError(error);
             }
         });
-//        return usersRef().push().setValue(user);
     }
 
-//    public static void editUser() {
-//
-//    }
-//
-//    public static void deleteUser() {
-//
-//    }
+    public static void getUsers(MyValueEventListener<List<User>> listener) {
+        usersRef().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<User> users = new ArrayList<>();
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    UserD userD = child.getValue(UserD.class);
+                    users.add(new User(userD, snapshot.getKey()));
+                }
+
+                listener.onValue(users);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 }

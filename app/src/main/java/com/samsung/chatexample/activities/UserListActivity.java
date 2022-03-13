@@ -11,8 +11,10 @@ import com.samsung.chatexample.R;
 import com.samsung.chatexample.adapters.UsersAdapter;
 import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.models.application.User;
+import com.samsung.chatexample.services.DatabaseService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserListActivity extends AppCompatActivity {
 
@@ -38,5 +40,13 @@ public class UserListActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+
+        DatabaseService.getUsers(new MyValueEventListener<List<User>>() {
+            @Override
+            public void onValue(List<User> userList) {
+                users.addAll(userList);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
