@@ -66,8 +66,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                 @Override
                 public void onClick(View v) {
                     openChat.onValue(user);
-//                    Intent intent = new Intent(v.getContext(), DialogActivity.class);
-//                    intent.putExtra("DIALOG_WITH", user);
                 }
             });
         }

@@ -2,9 +2,10 @@ package com.samsung.chatexample.models.application;
 
 import com.samsung.chatexample.models.domain.UserD;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User extends UserD {
+public class User extends UserD implements Serializable {
     public String id;
     public Date creationDate;
 

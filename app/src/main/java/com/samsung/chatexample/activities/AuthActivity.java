@@ -20,6 +20,8 @@ import com.samsung.chatexample.R;
 import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.services.AuthService;
 
+import java.util.Random;
+
 public class AuthActivity extends AppCompatActivity {
     EditText editTextEmail;
     EditText editTextName;
@@ -35,6 +37,10 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
 
         initViews();
+
+        editTextEmail.setText(
+                "test"+new Random().nextInt(10000)+"@gmail.com"
+        );
 
         createAcc.setOnClickListener(new View.OnClickListener() {
             @Override

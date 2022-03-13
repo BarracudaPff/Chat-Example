@@ -1,12 +1,12 @@
 package com.samsung.chatexample.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.firebase.database.DatabaseError;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.samsung.chatexample.R;
 import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.models.application.User;
@@ -14,7 +14,8 @@ import com.samsung.chatexample.services.DatabaseService;
 
 public class ChatActivity extends AppCompatActivity {
     User currentUser;
-    TextView textViewName;
+
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,29 +25,23 @@ public class ChatActivity extends AppCompatActivity {
         initViews();
 
         String id = getIntent().getStringExtra("USER_KEY");
-
         DatabaseService.getUser(id, new MyValueEventListener<User>() {
             @Override
             public void onValue(User user) {
                 currentUser = user;
-                textViewName.setText(user.name);
             }
+        });
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onException(Exception e) {
-                Toast.makeText(getBaseContext(), "Can't get user", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onDatabaseError(DatabaseError e) {
-                Toast.makeText(getBaseContext(), "Can't get user from firebase", Toast.LENGTH_SHORT).show();
-                e.toException().printStackTrace();
+            public void onClick(View v) {
+                System.out.println("!!");
+                startActivity(new Intent(v.getContext(), UserListActivity.class));
             }
         });
     }
 
     void initViews() {
-        textViewName = findViewById(R.id.textViewName);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
     }
 }
