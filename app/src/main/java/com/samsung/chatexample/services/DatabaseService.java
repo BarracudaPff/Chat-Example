@@ -57,7 +57,7 @@ public class DatabaseService {
                 ArrayList<User> users = new ArrayList<>();
                 for (DataSnapshot child : snapshot.getChildren()) {
                     UserD userD = child.getValue(UserD.class);
-                    users.add(new User(userD, snapshot.getKey()));
+                    users.add(new User(userD, child.getKey()));
                 }
 
                 listener.onValue(users);

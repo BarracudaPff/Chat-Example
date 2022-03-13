@@ -46,11 +46,11 @@ public class ChatService {
 //        ...
     }
 
-    public static FirebaseRecyclerOptions<Message> getUserOptions(User currentUser, User toUser) {
+    public static FirebaseRecyclerOptions<MessageD> getUserOptions(User currentUser, User toUser) {
         Query query = dialogsRef(currentUser, toUser).child("messages");
-        ClassSnapshotParser<Message> parser = new ClassSnapshotParser<>(Message.class);
+        ClassSnapshotParser<MessageD> parser = new ClassSnapshotParser<>(MessageD.class);
 
-        return new FirebaseRecyclerOptions.Builder<Message>()
+        return new FirebaseRecyclerOptions.Builder<MessageD>()
                 .setQuery(query, parser)
                 .build();
     }

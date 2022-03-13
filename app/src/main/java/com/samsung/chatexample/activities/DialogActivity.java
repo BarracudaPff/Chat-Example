@@ -66,6 +66,15 @@ public class DialogActivity extends AppCompatActivity {
                                             .addOnFailureListener(failureListener);
                                 }
                             }).addOnFailureListener(failureListener);
+                } else {
+                    ChatService.sendMessage(text, currentUser, toUser)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    editTextView.getText().clear();
+                                }
+                            })
+                            .addOnFailureListener(failureListener);
                 }
             }
         });
@@ -81,7 +90,7 @@ public class DialogActivity extends AppCompatActivity {
         sendView = findViewById(R.id.button);
         editTextView = findViewById(R.id.editTextTextPersonName2);
 
-        adapter = new MessageAdapter(ChatService.getUserOptions(currentUser, toUser));
+        adapter = new MessageAdapter(ChatService.getUserOptions(currentUser, toUser), currentUser, toUser);
         adapter.startListening();
 
         chatView.setAdapter(adapter);

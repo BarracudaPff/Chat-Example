@@ -12,15 +12,22 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.samsung.chatexample.R;
 import com.samsung.chatexample.models.application.Message;
+import com.samsung.chatexample.models.application.User;
+import com.samsung.chatexample.models.domain.MessageD;
 
-public class MessageAdapter extends FirebaseRecyclerAdapter<Message, MessageAdapter.MessageViewHolder> {
-    public MessageAdapter(@NonNull FirebaseRecyclerOptions<Message> options) {
+public class MessageAdapter extends FirebaseRecyclerAdapter<MessageD, MessageAdapter.MessageViewHolder> {
+    User currentUser;
+    User toUser;
+
+    public MessageAdapter(@NonNull FirebaseRecyclerOptions<MessageD> options, User currentUser, User toUser) {
         super(options);
+        this.currentUser = currentUser;
+        this.toUser = toUser;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull Message model) {
-        holder.bind(model);
+    protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull MessageD model) {
+        holder.bind(model, currentUser, toUser);
     }
 
     @NonNull
@@ -46,8 +53,9 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<Message, MessageAdap
             nameView = itemView.findViewById(R.id.textView);
         }
 
-        public void bind(Message message) {
-            nameView.setText(message.fromID);
+        public void bind(MessageD messageD, User from, User to) {
+            Message message = new Message(messageD, from, to, "");
+            nameView.setText(message.from.name);
             textView.setText(message.text);
             timeView.setText(message.creationDate.toLocaleString());
         }
