@@ -22,10 +22,8 @@ public class AuthService {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         if (authResult.getUser() != null) {
-                            UserD user = new UserD(name, new Date().getTime());
-                            listener.onValue(
-                                    DatabaseService.addUser(user)
-                            );
+                            UserD user = new UserD(name, email, new Date().getTime());
+                            listener.onValue(DatabaseService.addUser(user));
                         } else {
                             listener.onException(new Exception("No auth user"));
                         }
