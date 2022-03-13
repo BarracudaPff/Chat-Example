@@ -37,6 +37,24 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onValue(User user) {
                 currentUser = user;
+
+                adapter = new LastMessagesAdapter(DatabaseService.getUsersOptions(currentUser), new MyValueEventListener<String>() {
+                    @Override
+                    public void onValue(String toId) {
+                        DatabaseService.getUser(toId, new MyValueEventListener<User>() {
+                            @Override
+                            public void onValue(User value) {
+                                Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                                intent.putExtra("DIALOG_WITH", user);
+                                intent.putExtra("DIALOG_FROM", value);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                });
+                adapter.startListening();
+
+                userRecyclerView.setAdapter(adapter);
             }
         });
 
@@ -55,10 +73,6 @@ public class ChatActivity extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floatingActionButton);
         userRecyclerView = findViewById(R.id.userRecyclerView);
 
-        adapter = new LastMessagesAdapter(DatabaseService.getUsersOptions(currentUser));
-        adapter.startListening();
-
-        userRecyclerView.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);
         userRecyclerView.setLayoutManager(manager);
