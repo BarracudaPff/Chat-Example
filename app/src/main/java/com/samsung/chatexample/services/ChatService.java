@@ -2,6 +2,7 @@ package com.samsung.chatexample.services;
 
 import com.firebase.ui.database.ClassSnapshotParser;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,7 +43,14 @@ public class ChatService {
                 new DialogMetadataD(new Date().getTime()),
                 new HashMap<String, MessageD>()
         );
-        return dialogsRef(currentUser, toUser).setValue(dialog);
+        return dialogsRef(currentUser, toUser).setValue(dialog)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        DatabaseService.usersRef().child(currentUser.id).child("chats").push().setValue(toUser.id);
+                        DatabaseService.usersRef().child(toUser.id).child("chats").push().setValue(currentUser.id);
+                    }
+                });
 //        ...
     }
 

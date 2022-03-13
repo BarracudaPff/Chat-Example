@@ -5,17 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.samsung.chatexample.R;
+import com.samsung.chatexample.adapters.LastMessagesAdapter;
+import com.samsung.chatexample.adapters.MessageAdapter;
 import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.models.application.User;
+import com.samsung.chatexample.services.ChatService;
 import com.samsung.chatexample.services.DatabaseService;
 
 public class ChatActivity extends AppCompatActivity {
     User currentUser;
 
     FloatingActionButton floatingActionButton;
+    RecyclerView userRecyclerView;
+
+    LastMessagesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +53,28 @@ public class ChatActivity extends AppCompatActivity {
 
     void initViews() {
         floatingActionButton = findViewById(R.id.floatingActionButton);
+        userRecyclerView = findViewById(R.id.userRecyclerView);
+
+        adapter = new LastMessagesAdapter(DatabaseService.getUsersOptions(currentUser));
+        adapter.startListening();
+
+        userRecyclerView.setAdapter(adapter);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(RecyclerView.VERTICAL);
+        userRecyclerView.setLayoutManager(manager);
+    }
+
+    @Override
+    protected void onStart() {
+        if (adapter != null) {
+            adapter.startListening();
+        }
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        adapter.stopListening();
+        super.onStop();
     }
 }

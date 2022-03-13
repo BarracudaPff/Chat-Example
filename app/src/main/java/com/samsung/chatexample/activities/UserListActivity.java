@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.samsung.chatexample.R;
+import com.samsung.chatexample.adapters.MessageAdapter;
 import com.samsung.chatexample.adapters.UsersAdapter;
 import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.models.application.User;

@@ -2,14 +2,18 @@ package com.samsung.chatexample.services;
 
 import androidx.annotation.NonNull;
 
+import com.firebase.ui.database.ClassSnapshotParser;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.samsung.chatexample.listeners.MyValueEventListener;
 import com.samsung.chatexample.models.application.User;
+import com.samsung.chatexample.models.domain.MessageD;
 import com.samsung.chatexample.models.domain.UserD;
 
 import java.util.ArrayList;
@@ -67,5 +71,14 @@ public class DatabaseService {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    public static FirebaseRecyclerOptions<String> getUsersOptions(User user) {
+        Query query = usersRef().child(user.id).child("chats");
+        ClassSnapshotParser<String> parser = new ClassSnapshotParser<>(String.class);
+
+        return new FirebaseRecyclerOptions.Builder<String>()
+                .setQuery(query, parser)
+                .build();
     }
 }
