@@ -31,6 +31,7 @@ public class UserListActivity extends AppCompatActivity {
             public void onValue(User user) {
                 Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                 intent.putExtra("DIALOG_WITH", user);
+                intent.putExtra("DIALOG_FROM", (User) getIntent().getSerializableExtra("DIALOG_FROM"));
                 startActivity(intent);
                 finish();
             }

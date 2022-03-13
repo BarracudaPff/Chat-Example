@@ -36,7 +36,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("!!");
-                startActivity(new Intent(v.getContext(), UserListActivity.class));
+                Intent intent = new Intent(v.getContext(), UserListActivity.class);
+                intent.putExtra("DIALOG_FROM", currentUser);
+                startActivity(intent);
             }
         });
     }
